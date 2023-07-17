@@ -5,14 +5,14 @@ from fastapi import HTTPException, Request
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-from delvify.core import app_settings
-
-# from .db import SessionLocal
+from delvify.core import app_settings, logger
+from delvify.core.db import SessionLocal
+from delvify.services.notification import NotificationService
 
 
 def get_db() -> Session:
     try:
-        db = Session()  # change to SessionLocal() if you are using a database
+        db = SessionLocal()
         return db
     finally:
         db.close()
@@ -50,3 +50,11 @@ def get_current_user_id(request: Request) -> Optional[int]:
 
     except JWTError:
         raise HTTPException(status_code=401, detail="JWT token could not be decoded.")
+
+
+def get_notification_service() -> Optional[NotificationService]:
+    try:
+        return NotificationService(app_settings)
+    except Exception as e:
+        logger.error(f"Error while initializing notification service: {e}")
+        return None

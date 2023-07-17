@@ -9,8 +9,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class AppSettings(BaseSettings):
     SERVICE_NAME: str
     SECRET_KEY: SecretStr
-
     TOKEN_ALGORITHM: str
+    NOTIFICATION_SERVICE_URL: Optional[MultiHostUrl] = None
 
     model_config = SettingsConfigDict(case_sensitive=True)
 
@@ -46,6 +46,4 @@ class DBSettings(BaseSettings):
 
 
 app_settings: AppSettings = AppSettings()
-db_settings: Optional[
-    DBSettings
-] = None  # Change to DBSettings() if you are using a database
+db_settings: Optional[DBSettings] = DBSettings()
