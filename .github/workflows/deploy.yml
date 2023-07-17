@@ -1,0 +1,29 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Build Docker App Name
+        id: docker_app
+        run: echo "::set-output name=DOCKER_APP::$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]' | cut -d '/' -f 2)"
+
+      - name: Build and push Docker images
+        env:
+          DOCKER_APP: ${{ steps.docker_app.outputs.DOCKER_APP }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          DOCKER_APP_URL=docker.io/$DOCKER_REPO/$DOCKER_APP
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          DOCKER_BUILDKIT=1 docker build --tag $DOCKER_APP_URL:latest --tag $DOCKER_APP_URL:$GITHUB_SHA .
+          docker image push $DOCKER_APP_URL:$GITHUB_SHA
+          docker image push $DOCKER_APP_URL:latest

@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "microservice-template"
+version = "0.1.0"
+description = "A microservice template for efficient development and deployment"
+authors = ["AJIJIi <bochkov.alexej@gmail.com>"]
+packages = [{ include = "delvify" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.100.0"
+uvicorn = { extras = ["standard"], version = "^0.22.0" }
+sqlalchemy = "^2.0.18"
+pydantic = "^2.0.2"
+pydantic-settings = "^2.0.1"
+alembic = "^1.11.1"
+httpx = "^0.24.1"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+isort = "^5.12.0"
+pytest = "^7.4.0"
+
+[tool.poetry.group.lint]
+optional = true
+
+[tool.poetry.group.lint.dependencies]
+black = "^23.7.0"
+flake8 = "^6.0.0"
+mypy = "^1.4.1"
+isort = "^5.12.0"
+types-python-jose = "^3.3.4.7"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
