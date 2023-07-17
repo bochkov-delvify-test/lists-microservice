@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "microservice-template"
+name = "lists-microservice"
 version = "0.1.0"
-description = "A microservice template for efficient development and deployment"
+description = "A microservice for managing lists of tasks"
 authors = ["AJIJIi <bochkov.alexej@gmail.com>"]
 packages = [{ include = "delvify" }]
 
@@ -10,19 +10,20 @@ python = "^3.11"
 fastapi = "^0.100.0"
 uvicorn = { extras = ["standard"], version = "^0.22.0" }
 sqlalchemy = "^2.0.18"
-pydantic = "^2.0.2"
+pydantic = {extras = ["email"], version = "^2.0.3"}
 pydantic-settings = "^2.0.1"
 alembic = "^1.11.1"
 httpx = "^0.24.1"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
-isort = "^5.12.0"
-pytest = "^7.4.0"
+psycopg2-binary = "^2.9.6"
+schedule = "^1.2.0"
+pytz = "^2023.3"
 
 [tool.poetry.group.lint]
 optional = true
 
 [tool.poetry.group.lint.dependencies]
-black = "^23.7.0"
+black = {extras = ["d"], version = "^23.7.0"}
 flake8 = "^6.0.0"
 mypy = "^1.4.1"
 isort = "^5.12.0"
